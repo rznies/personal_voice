@@ -22,10 +22,9 @@ android {
             useSupportLibrary = true
         }
 
-        // Load API keys from .env file
-        buildConfigField("String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\"")
-        buildConfigField("String", "ELEVENLABS_API_KEY", "\"${project.findProperty("ELEVENLABS_API_KEY") ?: ""}\"")
-        buildConfigField("String", "CARTESIA_API_KEY", "\"${project.findProperty("CARTESIA_API_KEY") ?: ""}\"")
+        // 🔒 SECURITY: No API keys in BuildConfig
+        // Users must enter API keys manually in the app Settings screen
+        // Keys are stored encrypted using EncryptedSharedPreferences
     }
 
     buildTypes {
@@ -106,6 +105,10 @@ dependencies {
     implementation(libs.tensorflow.lite)
     implementation(libs.tensorflow.lite.support)
     implementation(libs.tensorflow.lite.task.audio)
+
+    // Security dependencies
+    implementation(libs.security.crypto)
+    implementation(libs.biometric)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

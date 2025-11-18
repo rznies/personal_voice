@@ -107,9 +107,10 @@
 
 
         <!-- Wake Word Detection Foreground Service -->
+        <!-- 🔒 DISABLED BY DEFAULT - User must enable in Security Settings -->
         <service
             android:name=".service.WakeWordService"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="false"
             android:foregroundServiceType="microphone" />
 
@@ -127,10 +128,11 @@
         </service>
 
         <!-- Boot Receiver for Auto-Start -->
+        <!-- 🔒 DISABLED BY DEFAULT - User must enable in Security Settings -->
         <receiver
             android:name=".receiver.BootReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:enabled="false"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
