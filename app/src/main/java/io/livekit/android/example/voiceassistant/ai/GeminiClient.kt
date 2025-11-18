@@ -10,7 +10,7 @@ import com.google.ai.client.generativeai.type.Schema
 import com.google.ai.client.generativeai.type.Tool
 import com.google.ai.client.generativeai.type.content
 import com.google.ai.client.generativeai.type.generationConfig
-import io.livekit.android.example.voiceassistant.BuildConfig
+import io.livekit.android.example.voiceassistant.security.SecureKeyManager
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
@@ -18,11 +18,21 @@ import timber.log.Timber
  * GeminiClient - The brain of StarkJarvis
  * Integrates with Google Gemini 2.5 Flash for LLM capabilities
  * Infused with Tony Stark's personality via StarkPersonality system prompt
+ *
+ * 🔒 SECURITY: API key loaded from encrypted storage (SecureKeyManager)
  */
 class GeminiClient(
-    private val context: Context,
-    private val apiKey: String = BuildConfig.GEMINI_API_KEY
+    private val context: Context
 ) {
+    private val apiKey: String by lazy {
+        val keyManager = SecureKeyManager.getInstance(context)
+        val key = keyManager.getKey(SecureKeyManager.KeyType.GEMINI)
+        if (key.isNullOrBlank()) {
+            Timber.e("⚠️ CRITICAL: Gemini API key not found! User must enter it in Settings.")
+            throw IllegalStateException("Gemini API key required. Please enter it in Security Settings.")
+        }
+        key
+    }
 
     private val textModel: GenerativeModel by lazy {
         GenerativeModel(

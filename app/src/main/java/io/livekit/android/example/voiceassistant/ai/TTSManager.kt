@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.speech.tts.TextToSpeech
-import io.livekit.android.example.voiceassistant.BuildConfig
+import io.livekit.android.example.voiceassistant.security.SecureKeyManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -25,6 +25,8 @@ import kotlin.coroutines.resumeWithException
  * 1. ElevenLabs (premium RDJ-style voice)
  * 2. Cartesia (alternative premium voice)
  * 3. Android TTS (fallback, free)
+ *
+ * 🔒 SECURITY: API keys loaded from encrypted storage (SecureKeyManager)
  */
 class TTSManager(private val context: Context) {
 
@@ -32,11 +34,12 @@ class TTSManager(private val context: Context) {
     private var isTTSReady = false
     private val httpClient = OkHttpClient()
     private var mediaPlayer: MediaPlayer? = null
+    private val keyManager = SecureKeyManager.getInstance(context)
 
     private val preferredBackend: TTSBackend
         get() = when {
-            BuildConfig.ELEVENLABS_API_KEY.isNotEmpty() -> TTSBackend.ELEVENLABS
-            BuildConfig.CARTESIA_API_KEY.isNotEmpty() -> TTSBackend.CARTESIA
+            keyManager.hasKey(SecureKeyManager.KeyType.ELEVENLABS) -> TTSBackend.ELEVENLABS
+            keyManager.hasKey(SecureKeyManager.KeyType.CARTESIA) -> TTSBackend.CARTESIA
             else -> TTSBackend.ANDROID
         }
 
@@ -76,8 +79,8 @@ class TTSManager(private val context: Context) {
      */
     private suspend fun speakWithElevenLabs(text: String): Result<Unit> {
         return try {
-            val apiKey = BuildConfig.ELEVENLABS_API_KEY
-            if (apiKey.isEmpty()) {
+            val apiKey = keyManager.getKey(SecureKeyManager.KeyType.ELEVENLABS)
+            if (apiKey.isNullOrBlank()) {
                 return Result.failure(Exception("ElevenLabs API key not configured"))
             }
 
@@ -134,8 +137,8 @@ class TTSManager(private val context: Context) {
      */
     private suspend fun speakWithCartesia(text: String): Result<Unit> {
         return try {
-            val apiKey = BuildConfig.CARTESIA_API_KEY
-            if (apiKey.isEmpty()) {
+            val apiKey = keyManager.getKey(SecureKeyManager.KeyType.CARTESIA)
+            if (apiKey.isNullOrBlank()) {
                 return Result.failure(Exception("Cartesia API key not configured"))
             }
 
