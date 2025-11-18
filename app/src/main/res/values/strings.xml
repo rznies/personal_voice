@@ -1,3 +1,63 @@
 <resources>
-    <string name="app_name">LiveKit Voice Assistant Example</string>
+    <!-- App Branding -->
+    <string name="app_name">StarkJarvis</string>
+    <string name="app_tagline">For When You Need a Billionaire\'s Edge</string>
+    <string name="stark_industries">Stark Industries</string>
+
+    <!-- Splash Screen -->
+    <string name="splash_loading">Initializing arc reactor…</string>
+    <string name="splash_quote">\"I am Iron Man.\" - You, probably.</string>
+
+    <!-- Jarvis Greetings -->
+    <string name="jarvis_greeting_morning">Good morning, Sir. Ready to conquer the world?</string>
+    <string name="jarvis_greeting_afternoon">Good afternoon, Boss. Your empire awaits.</string>
+    <string name="jarvis_greeting_evening">Good evening, Sir. Time to ship some genius code.</string>
+    <string name="jarvis_greeting_night">Burning the midnight oil again, Sir? Classic.</string>
+
+    <!-- Modes -->
+    <string name="suit_mode">Suit Mode</string>
+    <string name="suit_mode_activated">Suit Mode Activated. Let\'s build an empire, Sir.</string>
+    <string name="repulsor_mode">Repulsor Mode</string>
+    <string name="repulsor_target_acquired">Target acquired. Multi-millionaire mode engaged, Sir.</string>
+
+    <!-- Wake Word -->
+    <string name="wake_word_listening">Listening for \"Jarvis\"…</string>
+    <string name="wake_word_detected">At your service, Sir.</string>
+
+    <!-- Permissions -->
+    <string name="permission_mic_rationale">Jarvis needs to hear your brilliant ideas, Sir.</string>
+    <string name="permission_camera_rationale">Vision mode requires camera access. For analyzing your kingdom.</string>
+    <string name="permission_accessibility_rationale">Full device control unlocks Jarvis\'s true power, Boss.</string>
+
+    <!-- Accessibility Service -->
+    <string name="accessibility_service_description">StarkJarvis - Your personal AI for full device domination. Allows Jarvis to control apps, read screens, send messages, and help you build your multi-millionaire empire. Genius billionaire playboy philanthropist approved.</string>
+
+    <!-- Features -->
+    <string name="vision_mode">Vision Mode</string>
+    <string name="screen_awareness">Screen Awareness</string>
+    <string name="ar_hud">Holographic HUD</string>
+    <string name="code_review">Code Review</string>
+    <string name="idea_validation">Idea Validation</string>
+
+    <!-- UI Elements -->
+    <string name="tap_to_activate">Tap the arc reactor to activate Jarvis</string>
+    <string name="listening">Listening…</string>
+    <string name="processing">Processing your genius…</string>
+    <string name="thinking">Jarvis is thinking…</string>
+
+    <!-- Roasts & Sarcasm -->
+    <string name="roast_coffee">That\'s your 5th coffee, Sir. Ship or sleep?</string>
+    <string name="roast_procrastination">Still on YouTube? Your empire won\'t build itself, Boss.</string>
+    <string name="roast_code_quality">Your React code has more bugs than a Stark party, Sir.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Jarvis Communications</string>
+    <string name="notification_channel_desc">Messages from your personal AI assistant</string>
+    <string name="notification_wake_word">Jarvis is listening in the background</string>
+
+    <!-- Errors -->
+    <string name="error_no_api_key">Missing Gemini API key. Even Tony needs fuel, Sir.</string>
+    <string name="error_network">Network error. Check your connection, Boss.</string>
+    <string name="error_mic_permission">Microphone permission denied. Can\'t help if I can\'t hear you, Sir.</string>
+
 </resources>
