@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -20,6 +21,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Load API keys from .env file
+        buildConfigField("String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\"")
+        buildConfigField("String", "ELEVENLABS_API_KEY", "\"${project.findProperty("ELEVENLABS_API_KEY") ?: ""}\"")
+        buildConfigField("String", "CARTESIA_API_KEY", "\"${project.findProperty("CARTESIA_API_KEY") ?: ""}\"")
     }
 
     buildTypes {
@@ -40,6 +46,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15"
@@ -77,6 +84,29 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.okhttp)
     implementation(libs.timberkt)
+
+    // StarkJarvis dependencies
+    implementation(libs.gemini.ai)
+    implementation(libs.arcore)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.retrofit.scalars)
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
+    implementation(libs.work.runtime)
+    implementation(libs.datastore)
+    implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.lottie.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
+    implementation(libs.exoplayer.core)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.tensorflow.lite)
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.lite.task.audio)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

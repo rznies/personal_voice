@@ -16,33 +16,89 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Blue500,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
-    background = Color(0xFF070707),
-    onBackground = Color(0xFFEEEEEE),
-    surface = Color(0xFF131313),
-    onSurface = Color(0xFFEEEEEE),
-    outline = Color(0xFF202020),
+// ========================================
+// StarkJarvis Iron Man Theme
+// ========================================
+
+private val StarkDarkColorScheme = darkColorScheme(
+    primary = ArcReactorBlue,
+    onPrimary = StarkBlack,
+    primaryContainer = ArcReactorBlueDark,
+    onPrimaryContainer = ArcReactorBlueLight,
+
+    secondary = StarkGold,
+    onSecondary = StarkBlack,
+    secondaryContainer = StarkGoldDark,
+    onSecondaryContainer = StarkGoldLight,
+
+    tertiary = IronRed,
+    onTertiary = StarkWhite,
+    tertiaryContainer = IronRedDark,
+    onTertiaryContainer = IronRedLight,
+
+    background = StarkBlack,
+    onBackground = StarkWhite,
+    surface = StarkDarkGray,
+    onSurface = StarkWhite,
+    surfaceVariant = StarkCharcoal,
+    onSurfaceVariant = StarkLightGray,
+
+    outline = StarkSlate,
+    outlineVariant = GlassEffect,
+
+    error = ErrorRed,
+    onError = StarkWhite,
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Blue500,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-    background = Color(0xFFF9F9F6),
-    onBackground = Color(0xFF3B3B3B),
-    surface = Color(0xFFF3F3F1),
-    onSurface = Color(0xFF3B3B3B),
-    outline = Color(0xFFDBDBD8),
+// Light theme for daytime operations (though Tony prefers dark mode)
+private val StarkLightColorScheme = lightColorScheme(
+    primary = ArcReactorBlueDark,
+    onPrimary = StarkWhite,
+    primaryContainer = ArcReactorBlueLight,
+    onPrimaryContainer = StarkBlack,
+
+    secondary = StarkGoldDark,
+    onSecondary = StarkWhite,
+    secondaryContainer = StarkGoldLight,
+    onSecondaryContainer = StarkBlack,
+
+    tertiary = IronRedDark,
+    onTertiary = StarkWhite,
+    tertiaryContainer = IronRedLight,
+    onTertiaryContainer = StarkBlack,
+
+    background = Color(0xFFF5F5F5),
+    onBackground = StarkBlack,
+    surface = StarkWhite,
+    onSurface = StarkBlack,
+    surfaceVariant = Color(0xFFE0E0E0),
+    onSurfaceVariant = StarkMediumGray,
+
+    outline = StarkMediumGray,
+    outlineVariant = StarkLightGray,
+
+    error = ErrorRed,
+    onError = StarkWhite,
 )
 
+// Legacy color schemes for compatibility
+private val DarkColorScheme = StarkDarkColorScheme
+private val LightColorScheme = StarkLightColorScheme
+
+/**
+ * StarkJarvis Theme - Iron Man Edition
+ * "Sometimes you gotta run before you can walk" - Tony Stark
+ *
+ * Features:
+ * - Arc Reactor Blue as primary
+ * - Stark Gold for accents
+ * - Pure black backgrounds for OLED perfection
+ * - Always dark mode (like Tony's workshop)
+ */
 @Composable
-fun LiveKitVoiceAssistantExampleTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+fun StarkJarvisTheme(
+    darkTheme: Boolean = true, // Always dark mode by default (Tony approved)
+    dynamicColor: Boolean = false, // Disable dynamic colors for consistent Iron Man aesthetic
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -50,22 +106,38 @@ fun LiveKitVoiceAssistantExampleTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> StarkDarkColorScheme
+        else -> StarkLightColorScheme
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            // Pure black status bar for OLED devices
+            window.statusBarColor = StarkBlack.toArgb()
+            // Light status bar icons on dark background
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }
 
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        content = content
+    )
+}
+
+// Legacy theme for compatibility
+@Composable
+fun LiveKitVoiceAssistantExampleTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = true,
+    content: @Composable () -> Unit
+) {
+    StarkJarvisTheme(
+        darkTheme = darkTheme,
+        dynamicColor = dynamicColor,
         content = content
     )
 }
